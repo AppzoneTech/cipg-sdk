@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         charge.setCustomerEmail("jl1aw1al@appzonegroup.com");
         charge.setMerchantId("00037");
         charge.setProductName("Test Merchant");
-        charge.setOrderId("119163055");
+        charge.setOrderId("119163065");
 
         try{
             CipgSdk.pay((Activity) context, charge, new CipgCallback() {
