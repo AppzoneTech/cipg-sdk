@@ -18,6 +18,12 @@ Step 2. Add the dependency
  ## Usage
   
  ```java
+
+     //innitialize the sdk 
+     
+    CipgSdk.init("yourBaseUrl");
+  
+  
      void youInvokingMethod(){
         Charge charge = new Charge();
         charge.setAmount("2000");
