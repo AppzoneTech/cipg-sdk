@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         btnPay = findViewById(R.id.btnPay);
         context = this;
+        CipgSdk.init("http://paygatetest.fidelitybank.ng/CIPGForCard");
         btnPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

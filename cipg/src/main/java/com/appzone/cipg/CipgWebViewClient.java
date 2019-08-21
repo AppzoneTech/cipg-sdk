@@ -8,6 +8,7 @@ import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.appzone.cipg.global.AppState;
 import com.appzone.cipg.global.Constants;
 import com.appzone.cipg.model.Error;
 import com.appzone.cipg.ui.SdkCallback;
@@ -27,7 +28,7 @@ public class CipgWebViewClient extends WebViewClient {
         super.onLoadResource(view, url);
         Log.d(TAG, "Loading resources");
         Log.d(TAG, url);
-        if(url.equalsIgnoreCase(Constants.START_URL)){
+        if(url.equalsIgnoreCase(AppState.baseUrl+Constants.PAYMENT_URL)){
             completedCallback.loading();
         }
     }

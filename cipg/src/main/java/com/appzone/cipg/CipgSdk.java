@@ -7,6 +7,7 @@ import android.content.Intent;
 import androidx.annotation.NonNull;
 
 import com.appzone.cipg.global.AppState;
+import com.appzone.cipg.global.Constants;
 import com.appzone.cipg.model.Charge;
 import com.appzone.cipg.ui.WebViewActivity;
 
@@ -17,6 +18,9 @@ public class CipgSdk {
     public static void pay(Activity activity,@NonNull Charge charge, CipgCallback callback) {
         if (BuildConfig.DEBUG && (activity == null))
             throw new AssertionError("activity must not be null");
+
+        if (AppState.baseUrl.equalsIgnoreCase(""))
+            throw new AssertionError("Base url must be configured using the init method");
 
         if (charge.getOrderId().equalsIgnoreCase(""))
             throw new AssertionError("OrderId must not be empty");
@@ -53,6 +57,11 @@ public class CipgSdk {
 
         cipgCallback = callback;
         openWebView(activity);
+    }
+
+    public static void init(String serverUrl) {
+        AppState.baseUrl = serverUrl;
+        Constants.URL = serverUrl;
     }
 
     private static void openWebView(Context context){

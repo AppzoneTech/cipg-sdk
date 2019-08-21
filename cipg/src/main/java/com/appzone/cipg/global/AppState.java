@@ -11,4 +11,6 @@ public class AppState {
     public static String merchantId = "";
     public static String source = "sdk";
     public static Context appContext;
+
+    public static String baseUrl;
 }

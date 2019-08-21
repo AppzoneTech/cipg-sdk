@@ -126,7 +126,7 @@ public class WebViewActivity extends AppCompatActivity {
 
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
-        webView.postUrl(Constants.START_URL,
+        webView.postUrl(AppState.baseUrl+Constants.PAYMENT_URL,
                 postData.getBytes());
     }
 

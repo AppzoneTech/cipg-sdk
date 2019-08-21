@@ -1,4 +1,5 @@
 package com.appzone.cipg.network;
+import com.appzone.cipg.global.AppState;
 import com.appzone.cipg.global.Constants;
 
 import retrofit2.Retrofit;
@@ -12,7 +13,7 @@ public class NetworkManger {
     public static NetworkManger getINSTANCE(){
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(Constants.BASE_URL)
+                .baseUrl(AppState.baseUrl+Constants.BASE_API_URL)
                 .build();
          validationService = retrofit.create(ValidationService.class);
 
