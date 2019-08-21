@@ -19,7 +19,7 @@ Step 2. Add the dependency
   
  ```java
 
-     //innitialize the sdk 
+     //innitialize the sdk in the onCreate method of the Application or activity
      
     CipgSdk.init("yourBaseUrl");
   
