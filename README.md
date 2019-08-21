@@ -28,7 +28,7 @@ Step 2. Add the dependency
         Charge charge = new Charge();
         charge.setAmount("2000");
         charge.setCurrencyCode("566");
-        charge.setCustomerEmail("jl1aw1al@appzonegroup.com");
+        charge.setCustomerEmail("test@mail.com");
         charge.setMerchantId("00037");
         charge.setProductName("Test Merchant");
         charge.setOrderId(String.valueOf(orderId++));
