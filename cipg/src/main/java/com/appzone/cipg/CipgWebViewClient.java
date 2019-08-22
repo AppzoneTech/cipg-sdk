@@ -1,10 +1,6 @@
 package com.appzone.cipg;
-
 import android.net.Uri;
 import android.util.Log;
-import android.webkit.WebResourceError;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -16,9 +12,6 @@ import com.appzone.cipg.ui.SdkCallback;
 public class CipgWebViewClient extends WebViewClient {
     private String TAG = CipgWebViewClient.class.getSimpleName();
     private SdkCallback completedCallback;
-//    private String successString = "http://40.76.66.169/FidelityCIPG/MerchantServices/SDKPaymentOutcome.aspx?TransactionReference=20190816111411ktT&OrderID=119163052";
-//    private String someString = " http://40.76.66.169/FidelityCIPG/MerchantServices/SDKPaymentOutcome.aspx?TransactionReference=&OrderID=&ErrorMessage=DuplicateOrderID";
-
     public CipgWebViewClient(SdkCallback completedCallback) {
         this.completedCallback = completedCallback;
     }
@@ -32,8 +25,6 @@ public class CipgWebViewClient extends WebViewClient {
             completedCallback.loading();
         }
     }
-
-
 
     @Override
     public void onPageFinished(WebView view, String url) {
@@ -67,66 +58,24 @@ public class CipgWebViewClient extends WebViewClient {
                 error.setReason("Unknown error occurred");
                 handleCompletedCallback();
             }
-
-
         } else {
             completedCallback.loadingCompleted();
         }
     }
 
-
     @Override
-    public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-        super.onReceivedError(view, request, error);
+    public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+        super.onReceivedError(view, errorCode, description, failingUrl);
         Log.d(TAG, "onReceiveError event intercepted");
-        Log.d(TAG, "Request + " + request.getUrl().toString());
+        Log.d(TAG, "Request + " + failingUrl);
         Error netError = new Error();
-        netError.setReason(error.toString());
+        netError.setReason(description);
 
-        if (!error.toString().trim().equalsIgnoreCase("not found")
-                || !request.getUrl().toString().toLowerCase().contains(".png")
-                || !request.getUrl().toString().toLowerCase().contains(".css")
-                || !request.getUrl().toString().contains("WebResourceError")
-        ) {
+        if (!description.equalsIgnoreCase("Not Found")) {
             CipgSdk.cipgCallback.onError(netError);
             handleCompletedCallback();
         }
     }
-
-    @Override
-    public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
-        super.onReceivedHttpError(view, request, errorResponse);
-        Log.d(TAG, "onReceivedHttpError event intercepted");
-        Log.d(TAG, "Request + " + request.getUrl().toString());
-        Log.d(TAG, "Request Error + " + errorResponse.getReasonPhrase());
-        Error error = new Error();
-        error.setReason(errorResponse.getReasonPhrase());
-
-        if (!errorResponse.getReasonPhrase().equalsIgnoreCase("Not Found")) {
-            CipgSdk.cipgCallback.onError(error);
-            handleCompletedCallback();
-        }
-    }
-
-//    @Override
-//    public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-//        //Todo: this should be the url to match when cancel button is pressed.
-//        String successRedirectUrl = "http://40.76.66.169/FidelityCIPG/MerchantServices/MerchantMobile/PaymentOutcome.aspx";
-//        String url = request.getUrl().toString();
-//        Log.d(TAG, "shouldOverrideUrlLoading event intercepted");
-//        Log.d(TAG, "url: " + request.getUrl().toString());
-//        if (url.toLowerCase().contains(successRedirectUrl.toLowerCase())) {
-//            String token = "someToken"; //Todo: Get the token from the redirect url here.
-//            Response response = new Response();
-//            response.setTransRef(token);
-//            CipgSdk.cipgCallback.onSuccess(response);
-//            handleCompletedCallback();
-//            return true;
-//        } else {
-//            view.loadUrl(url);
-//            return false;
-//        }
-//    }
 
     private void handleCompletedCallback() {
         if (completedCallback != null) {

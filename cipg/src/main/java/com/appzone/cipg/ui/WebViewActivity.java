@@ -38,7 +38,7 @@ public class WebViewActivity extends AppCompatActivity {
 
         webView = findViewById(R.id.webView);
         progressDialog = new ProgressDialog(context);
-        //progressDialog.setCancelable(false);
+        progressDialog.setCancelable(false);
         CipgWebViewClient webViewClient = new CipgWebViewClient(new SdkCallback() {
             @Override
             public void close() {
@@ -55,7 +55,6 @@ public class WebViewActivity extends AppCompatActivity {
 
             @Override
             public void loadingCompleted() {
-                //progressDialog.hide();
                 Log.d("LOADING", "loading completed called");
                 if(progressDialog != null){
                     progressDialog.hide();
@@ -67,7 +66,7 @@ public class WebViewActivity extends AppCompatActivity {
             public void startTransRefValidation(final String transRef, final String orderId) {
                 final ProgressDialog progressDialog = new ProgressDialog(AppState.appContext);
                 progressDialog.setMessage("Almost done, Validating transaction");
-                Log.d("VALIDATING", "validating transaction ref");
+                Log.d("VALIDATING", "validating transaction ref ->"+transRef);
                 progressDialog.show();
                 ValidateRequest validateRequest = new ValidateRequest();
                 validateRequest.setAmount(AppState.amount);
